@@ -174,7 +174,11 @@ export const deleteUser = async (req, res) => {
 
 
 export const googleAuth = async (req, res) => {
-  const token = jwt.sign({ id: req.user.id, role: req.user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  const token = jwt.sign({ id: req.user.id, role: req.user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
 
-  res.json({ message: "Autenticación con Google exitosa", token });
+  res.json({ message: "Autenticación con Google exitosa",     user: {
+    id: req.id,
+    name: req.user.name,
+    email: req.user.email,
+  }, token });
 };
