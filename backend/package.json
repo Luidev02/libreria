@@ -4,9 +4,11 @@
   "description": "API REST para una librería",
   "main": "src/server.js",
   "type": "module",
+  
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "test": "set NODE_OPTIONS=--experimental-vm-modules && jest --runInBand"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
