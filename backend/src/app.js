@@ -12,6 +12,7 @@ import { authenticate } from "./middlewares/authMiddleware.js";
 dotenv.config();
 const app = express();
 
+
 // Middlewares
 app.use(cors());
 app.use(helmet());
