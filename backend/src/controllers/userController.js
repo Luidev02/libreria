@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/emailService.js";
 import User from "../models/user.js";
+import logger from "../utils/logger.js";
 
 export const register = async (req, res) => {
   try {
@@ -21,7 +22,7 @@ export const register = async (req, res) => {
       role,
       verified: false,
     });
-
+    logger.info(`Registro nuevo usuario ${email} de nombre ${name}`);
     const verificationUser = jwt.sign(
       { id: newUser.id },
       process.env.JWT_SECRET,
@@ -99,6 +100,7 @@ export const login = async (req, res) => {
         expiresIn: "1d",
       }
     );
+    logger.info(`Se logueo un usuario ${email} de nombre ${token}`);
     res.json({
       message: "Login exitoso",
       token,
@@ -172,13 +174,20 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-
 export const googleAuth = async (req, res) => {
-  const token = jwt.sign({ id: req.user.id, role: req.user.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+  const token = jwt.sign(
+    { id: req.user.id, role: req.user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
 
-  res.json({ message: "Autenticación con Google exitosa",     user: {
-    id: req.id,
-    name: req.user.name,
-    email: req.user.email,
-  }, token });
+  res.json({
+    message: "Autenticación con Google exitosa",
+    user: {
+      id: req.id,
+      name: req.user.name,
+      email: req.user.email,
+    },
+    token,
+  });
 };

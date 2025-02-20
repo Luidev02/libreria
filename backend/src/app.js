@@ -8,6 +8,7 @@ import bookRoutes from "./routes/bookRoutes.js";
 import loanRoutes from "./routes/loanRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import { getLogger } from "nodemailer/lib/shared/index.js";
 
 dotenv.config();
 const app = express();
@@ -20,11 +21,15 @@ app.use(morgan("dev"));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use((err, req, res, next) => {
+    getLogger.error(`${req.method} ${req.url} - ${err.message}`);
+    res.status(500).json({ error: 'Internal Server Error' });
+  });
+  
 app.use("/api/books", bookRoutes);
 app.use("/api/loan", loanRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/messages",messageRoutes)
+app.use("/api/messages",messageRoutes);
 
 
 export default app;
