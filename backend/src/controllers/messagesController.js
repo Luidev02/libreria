@@ -1,10 +1,11 @@
+import e from "express";
 import Message from "../models/Message.js";
 import User from "../models/user.js";
 
 export const sendMessage = async (req, res) => {
   try {
     const { receiver_id, message } = req.body;
-    sender_id = req.user.id;
+    const sender_id = req.user.id;
     if (!receiver_id || !message) {
       return res.status(400).json({ error: "Faltan datos requeridos" });
     }
@@ -26,6 +27,7 @@ export const sendMessage = async (req, res) => {
       .status(201)
       .json({ message: "mensaje enviado correctamente", data: newMessage });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "error al enviar mensaje" });
   }
 };

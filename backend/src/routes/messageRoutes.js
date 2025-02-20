@@ -4,9 +4,9 @@ import { authenticate } from "../middlewares/authMiddleware.js";
 
 const router = Router();
 
-router.post("/messages",authenticate,sendMessage);
-router.get("/messages", authenticate, getUserMessages);
-router.get("/messages/:id",authenticate,getMessageById);
-router.patch("/messages/:id/read", authenticate, markAsRead);
+router.post("/",authenticate,sendMessage);
+router.get("/", authenticate, getUserMessages);
+router.get("/:id",authenticate,getMessageById);
+router.patch("/:id/read", authenticate, markAsRead);
 
 export default router;

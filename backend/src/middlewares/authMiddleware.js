@@ -13,7 +13,8 @@ export const authenticate = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({ error: "Acceso denegado. Token inválido" });
     }
-    req.user = user;
+
+    req.user = user.dataValues;
     next();
   } catch (error) {
     res.status(401).json({ error: "Acceso denegado. Token inválido" });
