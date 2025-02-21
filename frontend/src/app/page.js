@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Search, User, BookOpen, BookmarkIcon } from "lucide-react";
 import axios from "axios";
+import Buscador from "@/lib/search";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -18,8 +19,8 @@ export default function Home() {
         .catch(function (error) {
           console.error("Error fetching books:", error);
         });
-        setBooks(response);
-        console.log("Books fetched successfully:", response);
+      setBooks(response);
+      console.log("Books fetched successfully:", response);
     };
 
     fetchBooks();
@@ -27,12 +28,6 @@ export default function Home() {
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    // Aquí iría la lógica para manejar la búsqueda
-    console.log("Búsqueda realizada:", searchQuery);
   };
 
   return (
@@ -62,7 +57,7 @@ export default function Home() {
                   Catálogo
                 </a>
                 <a
-        href="/user/loans"
+                  href="/user/loans"
                   className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
                 >
                   Préstamos
@@ -81,51 +76,37 @@ export default function Home() {
       {/* Contenido principal */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {/* Área de búsqueda */}
-        <div className="px-4 py-6 sm:px-0">
-          <form
-            onSubmit={handleSearchSubmit}
-            className="mt-1 flex rounded-md shadow-sm"
-          >
-            <input
-              type="text"
-              name="search"
-              id="search"
-              className="focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300"
-              placeholder="Buscar libros..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-            />
-            <button
-              type="submit"
-              className="inline-flex items-center px-4 py-2 border border-transparent rounded-r-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
-              <Search className="h-5 w-5" />
-            </button>
-          </form>
-        </div>
+        <Buscador />
 
         {/* Sección de novedades */}
         <div className="px-4 py-6 sm:px-0">
           <h2 className="text-2xl font-bold text-gray-800 mb-4">Novedades</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {books.map((book,index) => (
+            {books.map((book, index) => (
               <div
                 key={index}
                 className="bg-white overflow-hidden shadow rounded-lg"
               >
                 <div className="p-4">
                   <div className="flex items-center justify-center h-48 bg-gray-200">
-                    <img src={`http://localhost:3000${book.image}`}  className="h-12 w-12 text-gray-400" />
+                    <img
+                      src={`http://localhost:3000${book.image}`}
+                      className="h-[100%] w-[100%] object-cover rounded-md shadow-md"
+                    />
                   </div>
                   <h3 className="mt-2 text-lg font-medium text-gray-900">
                     {book.title}
                   </h3>
+                  <span>{book.author}</span>
                   <p className="mt-1 text-sm text-gray-500">
                     {book.description}
                   </p>
                 </div>
                 <div className="px-4 py-3 bg-gray-50 text-right">
-                  <a href={"/book/"+book.id} className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-indigo-600 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200 transition ease-in-out duration-150">
+                  <a
+                    href={"/book/" + book.id}
+                    className="inline-flex items-center px-3 py-1 border border-transparent text-sm leading-5 font-medium rounded-md text-indigo-600 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:border-indigo-300 focus:shadow-outline-indigo active:bg-indigo-200 transition ease-in-out duration-150"
+                  >
                     Ver detalles
                   </a>
                 </div>

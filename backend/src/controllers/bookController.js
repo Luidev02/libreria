@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import { Book } from "../models/index.js";
 
 export const getAllBooks = async (req, res) => {
@@ -23,7 +24,17 @@ export const getBookById = async (req, res) => {
 
 export const createBook = async (req, res) => {
   try {
-    const { title, author, description, image, stock } = req.body;
+    const {
+      title,
+      author,
+      description,
+      synopsis,
+      image,
+      stock,
+      gender_id,
+      isbn,
+      publicationDate,
+    } = req.body;
     if (!title || !author) {
       return res
         .status(400)
@@ -33,8 +44,12 @@ export const createBook = async (req, res) => {
       title,
       author,
       description,
+      synopsis,
       image,
       stock,
+      gender_id,
+      isbn,
+      publicationDate,
     });
     res.status(201).json(newBook);
   } catch (error) {
@@ -87,5 +102,24 @@ export const uploadBookImage = async (req, res) => {
     res.json(book);
   } catch (error) {
     res.status(500).json({ error: "Error al subir la imagen del libro" });
+  }
+};
+
+export const getfilterBooks = async (req, res) => {
+  try {
+    const { query } = req.query;
+    console.log("pruebas pruebas", query);
+    const books = await Book.findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.like]: `%${query}%` } },
+          { author: { [Op.like]: `%${query}%` } },
+        ],
+      },
+    });
+    res.json(books);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error al filtrar libros" });
   }
 };

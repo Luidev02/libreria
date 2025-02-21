@@ -5,6 +5,7 @@ import {
   deleteBook,
   getAllBooks,
   getBookById,
+  getfilterBooks,
   updateBook,
   uploadBookImage,
 } from "../controllers/bookController.js";
@@ -17,6 +18,8 @@ const router = Router();
 router.get("/", getAllBooks);
 
 router.get("/:id", getBookById);
+
+router.get("/s/search", getfilterBooks);
 
 router.post("/newBook", authenticate, authorize(["admin"]), createBook);
 
