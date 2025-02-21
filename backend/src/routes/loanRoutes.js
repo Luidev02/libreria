@@ -15,7 +15,7 @@ router.get("/",authenticate,authorize(["admin"]), getAllLoans);
 
 router.get("/:id",authenticate,authorize(["user"]), getLoanById);
 
-router.post("/newLoan",authenticate,authorize(["user"]), createLoan);
+router.post("/newLoan", createLoan);
 
 router.put("/update/:id",authenticate,authorize(["admin"]), updateLoan);
 

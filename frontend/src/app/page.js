@@ -6,13 +6,15 @@ import axios from "axios";
 import Buscador from "@/lib/search";
 
 export default function Home() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const [searchQuery, setSearchQuery] = useState("");
   const [books, setBooks] = useState([]);
   const URL = process.env.API_URL;
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await axios
-        .get(`http://localhost:3000/api/books`)
+        .get(`${apiUrl}/api/books`)
         .then(function (response) {
           return response.data;
         })
@@ -90,7 +92,7 @@ export default function Home() {
                 <div className="p-4">
                   <div className="flex items-center justify-center h-48 bg-gray-200">
                     <img
-                      src={`http://localhost:3000${book.image}`}
+                      src={`${apiUrl}${book.image}`}
                       className="h-[100%] w-[100%] object-cover rounded-md shadow-md"
                     />
                   </div>

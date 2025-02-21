@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
 
 export default function Buscador() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const [searchQuery, setSearchQuery] = useState("");
   const [resultados, setResultados] = useState([]);
 
@@ -12,7 +14,7 @@ export default function Buscador() {
     }
 
     const delayDebounceFn = setTimeout(() => {
-      fetch(`http://localhost:3000/api/books/s/search?query=${searchQuery}`)
+      fetch(`${apiUrl}/api/books/s/search?query=${searchQuery}`)
         .then((res) => res.json())
         .then((data) => setResultados(data)) // ✅ Guarda los resultados en el estado
         .catch((err) => console.error("Error en la búsqueda:", err));

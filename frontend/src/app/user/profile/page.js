@@ -4,66 +4,22 @@ import { useState, useEffect } from "react"
 import { User, Mail, Lock, CheckCircle, AlertCircle, BookOpen } from "lucide-react"
 
 // Simulamos un hook de autenticación
-const useAuth = () => {
-  // En una aplicación real, esto vendría de tu sistema de autenticación
-  return {
-    user: {
-      name: "Usuario Ejemplo",
-      email: "usuario@ejemplo.com",
-      isEmailVerified: false,
-    },
-    isAuthenticated: true,
-    updateUserProfile: async (data) => {
-      // Simula una actualización de perfil
-      console.log("Actualizando perfil:", data)
-      return new Promise((resolve) => setTimeout(resolve, 1000))
-    },
-    sendVerificationEmail: async () => {
-      // Simula el envío de un correo de verificación
-      console.log("Enviando correo de verificación")
-      return new Promise((resolve) => setTimeout(resolve, 1000))
-    },
-  }
-}
 
 export default function UserProfile() {
-  const { user, isAuthenticated, updateUserProfile, sendVerificationEmail } = useAuth()
-  const [name, setName] = useState(user?.name || "")
-  const [email, setEmail] = useState(user?.email || "")
+
+  const [name, setName] = useState( "")
+  const [email, setEmail] = useState( "")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
   const [isUpdating, setIsUpdating] = useState(false)
   const [updateMessage, setUpdateMessage] = useState("")
   const [isSendingVerification, setIsSendingVerification] = useState(false)
 
-  useEffect(() => {
-    if (user) {
-      setName(user.name)
-      setEmail(user.email)
-    }
-  }, [user])
+
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setIsUpdating(true)
-    setUpdateMessage("")
-
-    if (password !== confirmPassword) {
-      setUpdateMessage("Las contraseñas no coinciden")
-      setIsUpdating(false)
-      return
-    }
-
-    try {
-      await updateUserProfile({ name, email, password: password || undefined })
-      setUpdateMessage("Perfil actualizado con éxito")
-      setPassword("")
-      setConfirmPassword("")
-    } catch (error) {
-      setUpdateMessage("Error al actualizar el perfil")
-    } finally {
-      setIsUpdating(false)
-    }
+   
   }
 
   const handleVerifyEmail = async () => {
@@ -78,15 +34,6 @@ export default function UserProfile() {
     }
   }
 
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md">
-          <p className="text-xl font-semibold text-gray-800">Por favor, inicia sesión para ver tu perfil.</p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -238,23 +185,12 @@ export default function UserProfile() {
               {isUpdating ? "Actualizando..." : "Actualizar Perfil"}
             </button>
 
-            {!user.isEmailVerified && (
-              <button
-                type="button"
-                onClick={handleVerifyEmail}
-                disabled={isSendingVerification}
-                className={`${
-                  isSendingVerification ? "bg-yellow-400" : "bg-yellow-500 hover:bg-yellow-600"
-                } inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500`}
-              >
-                {isSendingVerification ? "Enviando..." : "Verificar Email"}
-              </button>
-            )}
+
           </div>
         </form>
         <div className="px-4 py-4 sm:px-6 bg-gray-50">
           <div className="flex items-center">
-            {user.isEmailVerified ? (
+            {/* {[user].isEmailVerified ? (
               <>
                 <CheckCircle className="h-5 w-5 text-green-400 mr-2" />
                 <p className="text-sm text-green-600">Email verificado</p>
@@ -264,7 +200,7 @@ export default function UserProfile() {
                 <AlertCircle className="h-5 w-5 text-yellow-400 mr-2" />
                 <p className="text-sm text-yellow-600">Email no verificado</p>
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>

@@ -5,6 +5,8 @@ import { BookOpen, Calendar, Tag, User } from "lucide-react";
 import axios from "axios";
 
 export default function BookDetail({ params }) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const [isRequesting, setIsRequesting] = useState(false);
   const [slug, setSlug] = useState(null);
   const [book, setBook] = useState({});
@@ -13,7 +15,7 @@ export default function BookDetail({ params }) {
       const resolvedParams = await params;
       if (resolvedParams && resolvedParams.id) {
         const response = await axios
-          .get(`http://localhost:3000/api/books/${resolvedParams.id}`)
+          .get(`${apiUrl}/api/books/${resolvedParams.id}`)
           .then(function (response) {
             return response.data;
           })
@@ -87,8 +89,8 @@ export default function BookDetail({ params }) {
                 className="h-full w-full object-cover md:h-[100%]  md:w-80 rounded-md shadow-md"
                 src={
                   book.image
-                    ? `http://localhost:3000${book.image}`
-                    : "http://localhost:3000/api/image/image.jpg"
+                    ? `${apiUrl}${book.image}`
+                    : `${apiUrl}/api/image/image.jpg`
                 }
                 alt={book.title}
               />

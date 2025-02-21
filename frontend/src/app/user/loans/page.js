@@ -2,66 +2,35 @@
 
 import { useState, useEffect } from "react";
 import { Book, BookOpen, Calendar, Clock, User } from "lucide-react";
-
-// Simulamos un hook de autenticación
-const useAuth = () => {
-  // En una aplicación real, esto vendría de tu sistema de autenticación
-  return {
-    user: { name: "Usuario Ejemplo", id: "123" },
-    isAuthenticated: true,
-  };
-};
+import axios from "axios";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function LoanHistory() {
-  const { user, isAuthenticated } = useAuth();
   const [loans, setLoans] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simula una llamada a la API para obtener los préstamos del usuario
     const fetchLoans = async () => {
-      // En una aplicación real, esto sería una llamada a tu API
-      await new Promise((resolve) => setTimeout(resolve, 1000)); // Simula delay de red
+       await axios
+        .get(`${API_URL}/api/loan`, {
+          headers: {
+            Authorization: `${window.localStorage.getItem("Authorization")}`,
+          },
+        })
+        .then((response) => {
+          setLoans(response.data);
+        })
+        .catch((error) => {
+          if (error.response.status === 401) {
+            window.localStorage.removeItem("Authorization");
+            window.location.href = "/login";
+          }
+        });
 
-      const mockLoans = [
-        {
-          id: 1,
-          bookTitle: "1984",
-          loanDate: "2023-05-01",
-          status: "active",
-          dueDate: "2023-06-01",
-        },
-        {
-          id: 2,
-          bookTitle: "Cien años de soledad",
-          loanDate: "2023-04-15",
-          status: "overdue",
-          dueDate: "2023-05-15",
-        },
-        {
-          id: 3,
-          bookTitle: "El principito",
-          loanDate: "2023-03-01",
-          status: "returned",
-          returnDate: "2023-03-15",
-        },
-        {
-          id: 4,
-          bookTitle: "Orgullo y prejuicio",
-          loanDate: "2023-02-15",
-          status: "returned",
-          returnDate: "2023-03-01",
-        },
-      ];
-
-      setLoans(mockLoans);
       setIsLoading(false);
     };
-
-    if (isAuthenticated) {
-      fetchLoans();
-    }
-  }, [isAuthenticated]);
+    fetchLoans();
+  }, []);
 
   const getStatusColor = (status) => {
     switch (status) {
@@ -88,18 +57,6 @@ export default function LoanHistory() {
         return status;
     }
   };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-md">
-          <p className="text-xl font-semibold text-gray-800">
-            Por favor, inicia sesión para ver tu historial de préstamos.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   if (isLoading) {
     return (
@@ -173,7 +130,7 @@ export default function LoanHistory() {
                         <Book className="h-6 w-6 text-indigo-600 mr-3" />
                         <div>
                           <h2 className="text-xl font-semibold text-gray-800">
-                            {loan.bookTitle}
+                            {loan.Book.title } + {loan.Book.author  }
                           </h2>
                           <div className="flex items-center mt-1">
                             <Calendar className="h-4 w-4 text-gray-400 mr-1" />
@@ -190,14 +147,7 @@ export default function LoanHistory() {
                             </div>
                           )}
                           {(loan.status === "active" ||
-                            loan.status === "overdue") && (
-                            <div className="flex items-center mt-1">
-                              <Clock className="h-4 w-4 text-gray-400 mr-1" />
-                              <p className="text-sm text-gray-600">
-                                Fecha de vencimiento: {loan.dueDate}
-                              </p>
-                            </div>
-                          )}
+                            loan.status === "overdue") }
                         </div>
                       </div>
                       <span

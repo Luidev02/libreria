@@ -3,9 +3,18 @@ import User from "../models/user.js";
 
 export const getAllLoans = async (req, res) => {
   try {
-    const loan = await Loan.findAll();
+    const loan = await Loan.findAll({
+      include: [
+        {
+          model: Book,
+          as: "Book",
+          attributes: ["title","author"], 
+        },
+      ],
+    });
     res.json(loan);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Error al obtener los prestamos" });
   }
 };
