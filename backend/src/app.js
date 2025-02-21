@@ -8,6 +8,7 @@ import bookRoutes from "./routes/bookRoutes.js";
 import loanRoutes from "./routes/loanRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -35,6 +36,7 @@ app.use("/api/books", bookRoutes);
 app.use("/api/loan", loanRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/messages",messageRoutes);
+app.use("/api/reports", reportRoutes);
 app.use("/api/images", express.static(path.join(__dirname, "uploads")));
 
 

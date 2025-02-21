@@ -42,8 +42,7 @@ const Loan = sequelize.define("Loan", {
 },  {
   timestamps: true, 
 });
+Loan.belongsTo(User, { foreignKey: "userId", as: "user" });
 
-Book.hasMany(Loan, { foreignKey: "bookId", onDelete: "CASCADE" });
-Loan.belongsTo(Book, { foreignKey: "bookId" });
 
 export default Loan;
