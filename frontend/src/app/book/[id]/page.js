@@ -3,13 +3,14 @@
 import { useEffect, useState } from "react";
 import { BookOpen, Calendar, Tag, User } from "lucide-react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
 
 export default function BookDetail({ params }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
   const [isRequesting, setIsRequesting] = useState(false);
-  const [slug, setSlug] = useState(null);
   const [book, setBook] = useState({});
+  const [token, setToken] = useState(null);
+
   useEffect(() => {
     const intento = async () => {
       const resolvedParams = await params;
@@ -25,18 +26,28 @@ export default function BookDetail({ params }) {
         console.log("Books fetched successfully:", response);
         setBook(response);
       }
+      setToken(localStorage.getItem("Authorization"));
     };
 
     intento();
   }, [params]);
 
-  const handleLoanRequest = () => {
+  const handleLoanRequest = async () => {
     setIsRequesting(true);
-    // Aquí iría la lógica para solicitar el préstamo
-    setTimeout(() => {
-      setIsRequesting(false);
-      alert("Préstamo solicitado con éxito");
-    }, 1000);
+
+    await axios.post(
+      `${apiUrl}/api/loan/new/user`,
+      { bookId: book.id },
+      { headers: { Authorization: `${token}` } }
+    )
+      .then(function (response) {
+        setIsRequesting(false);
+        toast.success("Préstamo solicitado exitosamente!");
+      })
+      .catch(function (error) {
+        setIsRequesting(false);
+        toast.error("Hubo un error al solicitar el préstamo.");
+      });
   };
 
   return (
@@ -150,6 +161,7 @@ export default function BookDetail({ params }) {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

@@ -8,7 +8,7 @@ export const getAllLoans = async (req, res) => {
         {
           model: Book,
           as: "Book",
-          attributes: ["title","author"], 
+          attributes: ["title", "author"],
         },
       ],
     });
@@ -55,6 +55,38 @@ export const createLoan = async (req, res) => {
 
     res.json(loan);
   } catch (error) {
+    res.status(500).json({ error: "Error al crear el prestamo" });
+  }
+};
+
+export const createLoanPerUser = async (req, res) => {
+  try {
+    const { id } = req.user;
+    const { bookId } = req.body;
+    if (!bookId) {
+      return res
+        .status(400)
+        .json({ error: "Debe especificar el usuario y el libro" });
+    }
+    const book = await Book.findByPk(bookId);
+    if (book.stock <= 0) {
+      return res.status(400).json({ error: "No hay stock disponible" });
+    }
+
+    const loan = await Loan.create({
+      userId: id,
+      bookId,
+      loanDate: new Date(),
+    });
+    if (!loan) {
+      return res.status(400).json({ error: "No se pudo crear el prestamo" });
+    }
+
+    await book.update({ stock: book.stock - 1 });
+
+    res.json(loan);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "Error al crear el prestamo" });
   }
 };

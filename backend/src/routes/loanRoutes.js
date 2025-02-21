@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   createLoan,
+  createLoanPerUser,
   deleteLoan,
   getAllLoans,
   getLoanById,
@@ -15,7 +16,9 @@ router.get("/",authenticate,authorize(["admin"]), getAllLoans);
 
 router.get("/:id",authenticate,authorize(["user"]), getLoanById);
 
-router.post("/newLoan", createLoan);
+router.post("/newLoan", authenticate,authorize(["admin"]),createLoan);
+
+router.post("/new/user",authenticate,createLoanPerUser)
 
 router.put("/update/:id",authenticate,authorize(["admin"]), updateLoan);
 

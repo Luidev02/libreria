@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Puntuación General: **7.5/10**
 
-First, run the development server:
+### 1. **Autenticación y Autorización (8/10)**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+✅ Implementación de login normal y con Google.\
+✅ Uso de bcryptjs para el hash de contraseñas.\
+✅ Autenticación con JWT bien estructurada.\
+✅ Uso de Nodemailer para verificación de correo.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. **Gestión de Libros y Préstamos (9/10)**
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+✅ CRUD de libros y préstamos bien estructurado.\
+✅ Relaciones adecuadas entre usuarios y préstamos.\
+✅ Uso de MySQL con buenas normalizaciones.\
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. **Metodología Ágil y Buenas Prácticas (7.5/10)**
 
-## Learn More
+✅ Código modular y organizado por rutas y controladores.\
+✅ Uso de middlewares para validaciones y seguridad.\
 
-To learn more about Next.js, take a look at the following resources:
+### 1. **Gestión de Imágenes y Archivos (6/10)**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 2. **Mensajería y Notificaciones (6/10)**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+✅ Uso de Nodemailer para emails.\
 
-## Deploy on Vercel
+### 3. **Seguridad y Optimización (7/10)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+✅ Uso de bcryptjs para contraseñas.\
+✅ Validaciones en algunos endpoints.\
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

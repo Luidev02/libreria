@@ -19,6 +19,7 @@ export default function LoanHistory() {
         })
         .then((response) => {
           setLoans(response.data);
+          setIsLoading(false);
         })
         .catch((error) => {
           if (error.response.status === 401) {
@@ -27,7 +28,7 @@ export default function LoanHistory() {
           }
         });
 
-      setIsLoading(false);
+   
     };
     fetchLoans();
   }, []);
