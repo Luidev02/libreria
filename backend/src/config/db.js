@@ -28,4 +28,4 @@ const syncDatabase = async () => {
   }
 }
 
-// syncDatabase();
+syncDatabase();
