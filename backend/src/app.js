@@ -25,7 +25,8 @@ const __dirname = path.dirname(__filename);
 app.use(cors({
   origin: 'http://localhost:3001', 
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true, optionsSuccessStatus: 200 
 }));
 
 app.use(

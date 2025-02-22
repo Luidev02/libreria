@@ -4,6 +4,7 @@ import {
   createLoanPerUser,
   deleteLoan,
   getAllLoans,
+  getAllLoansPerUser,
   getLoanById,
   updateLoan,
 } from "../controllers/loanController.js";
@@ -13,6 +14,8 @@ import { authorize } from "../middlewares/roleMiddleware.js";
 const router = Router();
 
 router.get("/",authenticate,authorize(["admin"]), getAllLoans);
+
+router.get("/user", authenticate, getAllLoansPerUser);
 
 router.get("/:id",authenticate,authorize(["user"]), getLoanById);
 

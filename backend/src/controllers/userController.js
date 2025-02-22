@@ -108,6 +108,7 @@ export const login = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
     });
   } catch (error) {
@@ -181,13 +182,14 @@ export const googleAuth = async (req, res) => {
     { expiresIn: "1d" }
   );
 
-  res.json({
-    message: "Autenticación con Google exitosa",
-    user: {
-      id: req.id,
-      name: req.user.name,
-      email: req.user.email,
-    },
-    token,
-  });
+  const user = {
+    id: req.user.id, 
+    name: req.user.name,
+    email: req.user.email,
+    role: req.user.role,
+  };
+
+  const encodedUser = encodeURIComponent(JSON.stringify(user));
+
+  res.redirect(`${process.env.URL_FRONTEND}/login?token=${token}&info=${encodedUser}`);
 };

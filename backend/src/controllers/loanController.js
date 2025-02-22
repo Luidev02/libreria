@@ -19,6 +19,26 @@ export const getAllLoans = async (req, res) => {
   }
 };
 
+export const getAllLoansPerUser = async (req, res) => {
+  try {
+    const loan = await Loan.findAll({
+      where: { userId: req.user.id},
+      include: [
+        {
+          model: Book,
+          as: "Book",
+          attributes: ["title", "author"],
+        },
+      ],
+    });
+    res.json(loan);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Error al obtener los prestamos" });
+  }
+};
+
+
 export const getLoanById = async (req, res) => {
   try {
     const loan = await Loan.findByPk(req.params.id);
