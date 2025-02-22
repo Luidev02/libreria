@@ -1,0 +1,1085 @@
+{
+	"info": {
+		"_postman_id": "0ac9fedc-c2ee-41f6-a429-e26a142077f2",
+		"name": "Libreria API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28496978"
+	},
+	"item": [
+		{
+			"name": "books",
+			"item": [
+				{
+					"name": "Crear Nuevos Libros",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NTI1NCwiZXhwIjoxNzQwMjUxNjU0fQ.UEzspjZGaMYMqICykl5b3iYs0dCEMLW1sDcNt_9MmOY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"title\": \"1984\",\r\n        \"author\": \"George Orwell\",\r\n        \"description\": \"Una distopía que explora el totalitarismo y la manipulación de la verdad en una sociedad controlada por un gobierno opresivo.\",\r\n        \"synopsis\": \"Winston Smith trabaja en el Ministerio de la Verdad, donde reescribe la historia para ajustarse a las demandas del Partido. Su vida cambia cuando comienza a cuestionar la realidad impuesta por el Gran Hermano.\",\r\n        \"image\": \"/api/images/image.jpg\",\r\n        \"stock\": 10,\r\n        \"gender_id\": \"44fc26cf-9466-4a2b-9b20-08cab5b56fd3\",\r\n        \"isbn\": \"9780451524935\",\r\n        \"publicationDate\": \"1949-06-08\"\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/books/newBook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"newBook"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Todos los libros",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer Libro por Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/books/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar libros",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/books/s/search?query=J.R.R",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"s",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "J.R.R"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar un Libro por id ",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"El hobbit\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/books/updateBook/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"updateBook",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Libro por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/books/deleteBook/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"deleteBook",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subir Imagen del libro",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NTI1NCwiZXhwIjoxNzQwMjUxNjU0fQ.UEzspjZGaMYMqICykl5b3iYs0dCEMLW1sDcNt_9MmOY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/luide/Downloads/el señor.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/books/upload/image/5a210cb0-0a77-4408-83c4-34b5f5be18f5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"upload",
+								"image",
+								"5a210cb0-0a77-4408-83c4-34b5f5be18f5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Loan",
+			"item": [
+				{
+					"name": "Traer todos los prestamos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NTI1NCwiZXhwIjoxNzQwMjUxNjU0fQ.UEzspjZGaMYMqICykl5b3iYs0dCEMLW1sDcNt_9MmOY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/loan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"loan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un prestamo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NTI1NCwiZXhwIjoxNzQwMjUxNjU0fQ.UEzspjZGaMYMqICykl5b3iYs0dCEMLW1sDcNt_9MmOY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"f05f51e1-10cf-4f48-a482-69b299dd209c\",\r\n  \"bookId\": \"4516028a-0c8b-4021-9e01-4970414ae7f1\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/loan/newloan",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"loan",
+								"newloan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un prestamo por usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NTI1NCwiZXhwIjoxNzQwMjUxNjU0fQ.UEzspjZGaMYMqICykl5b3iYs0dCEMLW1sDcNt_9MmOY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"bookId\": \"5a210cb0-0a77-4408-83c4-34b5f5be18f5\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/loan/new/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"loan",
+								"new",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar estado del prestamo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"status\": \"returned\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/loan/update/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"loan",
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Traer los detalles del prestamo por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/loan/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"loan",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar el prestamo por id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/loan/delete/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"loan",
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Registrar usuario (admin,user)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n\r\n    \"name\":\"Luis Caceres\",\r\n    \"email\":\"luidev02@hotmail.com\",\r\n    \"password\":\"123\",\r\n    \"role\": \"admin\"\r\n }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verificar correo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/verify/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"verify",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"luidev02@hotmail.com\",\r\n  \"password\": \"123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Datos del usuario",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"\",\r\n     \"email\":\"\",\r\n      \"password\":\"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/update/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"update",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar usuario ",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MjM2MjZlLWIwY2MtNDk3Yy1iOWIyLTRkM2IxMmYzNjM0YSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMDEyNjQ2LCJleHAiOjE3NDAwOTkwNDZ9.Bkr2lm4pzrfloqRRY4v0yMX_lCkFcECnOdAqGL9yYfA",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/users/delete/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"delete",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Google",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/google",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"google"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "Obterner detalles del mensaje",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlODJjN2QxLTIwNGYtNGI1MS05MDRkLTA3OGQwOTkzZTUzOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMDc2ODM5LCJleHAiOjE3NDAxNjMyMzl9.DHwejoxaoQuBZnlzYHZaVNE04JpE0oaytDJZJx4CFwQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/messages/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"messages",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los mensajes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlODJjN2QxLTIwNGYtNGI1MS05MDRkLTA3OGQwOTkzZTUzOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMDc2ODM5LCJleHAiOjE3NDAxNjMyMzl9.DHwejoxaoQuBZnlzYHZaVNE04JpE0oaytDJZJx4CFwQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enviar un mensaje ",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlODJjN2QxLTIwNGYtNGI1MS05MDRkLTA3OGQwOTkzZTUzOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMDc2ODM5LCJleHAiOjE3NDAxNjMyMzl9.DHwejoxaoQuBZnlzYHZaVNE04JpE0oaytDJZJx4CFwQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n    \"receiver_id\":\"17d051cb-22f7-4010-ac55-200bd2dd43ef\", \r\n    \"message\":\"Holaaa prueba 123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/messages/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"messages",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cambia el estado si fue leido",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJlODJjN2QxLTIwNGYtNGI1MS05MDRkLTA3OGQwOTkzZTUzOSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMDc2ODM5LCJleHAiOjE3NDAxNjMyMzl9.DHwejoxaoQuBZnlzYHZaVNE04JpE0oaytDJZJx4CFwQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/messages/:id/read",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"messages",
+								":id",
+								"read"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "reports",
+			"item": [
+				{
+					"name": "generar reportes de prestamos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBhYzUzMTRmLThhNzctNDM0OC1iNzZlLWJkY2U4MzdhOTg3OSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMDg5ODM0LCJleHAiOjE3NDAxNzYyMzR9.baE7aJKvKDtHUqg2nSzXa-g3aflJPmip0Udu2T3ABRs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/reports/loans?startDate=2025-01-01&endDate=2025-12-31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"reports",
+								"loans"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2025-01-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-12-31"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generar reportes de Usuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBhYzUzMTRmLThhNzctNDM0OC1iNzZlLWJkY2U4MzdhOTg3OSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzQwMDg5ODM0LCJleHAiOjE3NDAxNzYyMzR9.baE7aJKvKDtHUqg2nSzXa-g3aflJPmip0Udu2T3ABRs",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/reports/users?startDate=2025-01-01&endDate=2025-12-31",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"reports",
+								"users"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2025-01-01"
+								},
+								{
+									"key": "endDate",
+									"value": "2025-12-31"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "gender",
+			"item": [
+				{
+					"name": "Traer todo los generos",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/gender/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"gender",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un genero",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NDU5OSwiZXhwIjoxNzQwMjUwOTk5fQ.aqXgJBNNydeeisvGXkDgFQcsDTNY_9n5wMA4DtyQSGI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Prueba\",\r\n    \"description\":\"description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/gender/new-gender",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"gender",
+								"new-gender"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar un genero",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NDU5OSwiZXhwIjoxNzQwMjUwOTk5fQ.aqXgJBNNydeeisvGXkDgFQcsDTNY_9n5wMA4DtyQSGI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Prueba\",\r\n    \"description\":\"description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/gender/update-gender/44fc26cf-9466-4a2b-9b20-08cab5b56fd3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"gender",
+								"update-gender",
+								"44fc26cf-9466-4a2b-9b20-08cab5b56fd3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Genero",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImYwNWY1MWUxLTEwY2YtNGY0OC1hNDgyLTY5YjI5OWRkMjA5YyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0MDE2NDU5OSwiZXhwIjoxNzQwMjUwOTk5fQ.aqXgJBNNydeeisvGXkDgFQcsDTNY_9n5wMA4DtyQSGI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Prueba\",\r\n    \"description\":\"description\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/gender/delete-gender/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"gender",
+								"delete-gender",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Trear imagenes",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/images/image.jpg",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"images",
+						"image.jpg"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

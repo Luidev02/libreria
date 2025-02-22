@@ -23,6 +23,9 @@ export const sendMessage = async (req, res) => {
       receiver_id,
       message,
     });
+
+
+    
     res
       .status(201)
       .json({ message: "mensaje enviado correctamente", data: newMessage });

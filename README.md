@@ -36,17 +36,7 @@ API REST desarrollada con Express y MySQL para la gestión de una librería, per
 
 ---
 
-## Funcionalidades pendientes
 
-- **Mensajería interna** (notificaciones por préstamos vencidos)
-- **Carga y gestión de imágenes** (libros y usuarios, almacenamiento local)
-- **Middleware de errores y validaciones avanzadas**
-- **Optimizaciones en consultas SQL**
-- **Tests unitarios e integración**
-- **Desarrollo del frontend en React con Tailwind CSS**
-- **Documentación con Swagger o Postman**
-
----
 
 ## Instalación y configuración
 

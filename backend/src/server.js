@@ -1,19 +1,26 @@
 import app from "./app.js";
 import { sequelize } from "./config/db.js";
+import { setupSocket } from "./websockets/socketHandler.js";
+import { initSocket } from "./websockets/socketInstance.js";
 
 
-const port = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 3000;
 
 const startServer = async () => {
   try {
     await sequelize.authenticate();
-    console.log("Base de datos conectada!");
+    console.log("Conexión a la base de datos OK.");
 
-    app.listen(port, () => {
-      console.log(`server corriendo en el puerto: ${port}`);
+    const server = app.listen(PORT, () => {
+      console.log(`Servidor corriendo en puerto :${PORT}`);
     });
+
+    const io = initSocket(server);
+    setupSocket(io);
+
   } catch (error) {
-    console.log("Error al conectar base de datos", error);
+    console.error("Error al conectar con la base de datos:", error);
     process.exit(1);
   }
 };
