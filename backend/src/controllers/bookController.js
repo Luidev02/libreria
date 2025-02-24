@@ -1,9 +1,16 @@
-import { Op } from "sequelize";
-import { Book } from "../models/index.js";
+import {
+  createBookService,
+  deleteBookService,
+  getAllBooksService,
+  getBookByIdService,
+  getFilterBooksService,
+  updateBookService,
+  uploadBookImageService,
+} from "../services/bookService.js";
 
 export const getAllBooks = async (req, res) => {
   try {
-    const books = await Book.findAll();
+    const books = await getAllBooksService();
     res.json(books);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener libros" });
@@ -12,10 +19,8 @@ export const getAllBooks = async (req, res) => {
 
 export const getBookById = async (req, res) => {
   try {
-    const book = await Book.findByPk(req.params.id);
-    if (!book) {
-      return res.status(404).json({ error: "Libro no encontrado" });
-    }
+    const { id } = req.params;
+    const book = await getBookByIdService(id);
     res.json(book);
   } catch (error) {
     res.status(500).json({ error: "Error al obtener libro" });
@@ -24,33 +29,8 @@ export const getBookById = async (req, res) => {
 
 export const createBook = async (req, res) => {
   try {
-    const {
-      title,
-      author,
-      description,
-      synopsis,
-      image,
-      stock,
-      gender_id,
-      isbn,
-      publicationDate,
-    } = req.body;
-    if (!title || !author) {
-      return res
-        .status(400)
-        .json({ error: "El título y el autor son obligatorios" });
-    }
-    const newBook = await Book.create({
-      title,
-      author,
-      description,
-      synopsis,
-      image,
-      stock,
-      gender_id,
-      isbn,
-      publicationDate,
-    });
+    const datos = req.body;
+    const newBook = await createBookService(datos);
     res.status(201).json(newBook);
   } catch (error) {
     res.status(500).json({ error: "Error al crear libro" });
@@ -60,11 +40,7 @@ export const createBook = async (req, res) => {
 export const updateBook = async (req, res) => {
   try {
     const { id } = req.params;
-    const book = await Book.findByPk(id);
-    if (!book) {
-      return res.status(404).json({ error: "Libro no encontrado" });
-    }
-    await book.update(req.body);
+    const book = await updateBookService(id);
     res.json(book);
   } catch (error) {
     res.status(500).json({ error: "Error al actualizar libro" });
@@ -74,11 +50,7 @@ export const updateBook = async (req, res) => {
 export const deleteBook = async (req, res) => {
   try {
     const { id } = req.params;
-    const book = await Book.findByPk(id);
-    if (!book) {
-      return res.status(404).json({ error: "Libro no encontrado" });
-    }
-    await book.destroy();
+    const book = await deleteBookService(id);
     res.json({ message: "Libro eliminado correctamente" });
   } catch (error) {
     res.status(500).json({ error: "Error al eliminar libro" });
@@ -88,17 +60,8 @@ export const deleteBook = async (req, res) => {
 export const uploadBookImage = async (req, res) => {
   try {
     const { id } = req.params;
-    const book = await Book.findByPk(id);
-    if (!book) {
-      return res.status(404).json({ error: "Libro no encontrado" });
-    }
     const file = req.file;
-    console.log(file);
-    if (!file) {
-      return res.status(400).json({ error: "Debes adjuntar una imagen" });
-    }
-    const filepath = `/api/images/${file.filename}`;
-    await book.update({ image: filepath });
+    const book = await uploadBookImageService(id, file);
     res.json(book);
   } catch (error) {
     res.status(500).json({ error: "Error al subir la imagen del libro" });
@@ -108,15 +71,7 @@ export const uploadBookImage = async (req, res) => {
 export const getfilterBooks = async (req, res) => {
   try {
     const { query } = req.query;
-    console.log("pruebas pruebas", query);
-    const books = await Book.findAll({
-      where: {
-        [Op.or]: [
-          { title: { [Op.like]: `%${query}%` } },
-          { author: { [Op.like]: `%${query}%` } },
-        ],
-      },
-    });
+    const books = await getFilterBooksService(query);
     res.json(books);
   } catch (error) {
     console.log(error);
