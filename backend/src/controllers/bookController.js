@@ -13,6 +13,7 @@ export const getAllBooks = async (req, res) => {
     const books = await getAllBooksService();
     res.json(books);
   } catch (error) {
+    
     res.status(500).json({ error: "Error al obtener libros" });
   }
 };

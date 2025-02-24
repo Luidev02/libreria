@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/emailService.js";
-import User from "../models/user.js";
+import User from "../models/User.js";
 import logger from "../utils/logger.js";
 
 export const register = async (req, res) => {

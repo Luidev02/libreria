@@ -1,6 +1,6 @@
-import e from "express";
+
 import Message from "../models/Message.js";
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 export const sendMessage = async (req, res) => {
   try {

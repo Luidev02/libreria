@@ -1,5 +1,5 @@
 
-import Book from "./book.js";
+import Book from "./Book.js";
 import Gender from "./Gender.js";
 import Loan from "./Loan.js";
 

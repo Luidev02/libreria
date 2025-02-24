@@ -12,6 +12,7 @@ import userRoutes from "./routes/userRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 import genderRoutes from "./routes/genderRoutes.js";
+import apms from "./config/apm.js"
 
 dotenv.config();
 const app = express();
@@ -22,7 +23,7 @@ const __dirname = path.dirname(__filename);
 
 // Middlewares
 app.use(cors({
-  origin: 'http://localhost:3001',
+  origin: 'https://3001-idx-libreria-1740428106559.cluster-fnjdffmttjhy2qqdugh3yehhs2.cloudworkstations.dev',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, 
@@ -33,6 +34,7 @@ app.use(morgan("dev"));
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 
 // Rutas

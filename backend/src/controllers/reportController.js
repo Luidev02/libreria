@@ -1,6 +1,6 @@
 import { Op, Sequelize } from "sequelize";
 import { Book, Loan } from "../models/index.js";
-import User from "../models/user.js";
+import User from "../models/User.js";
 
 export const getloanReports = async (req, res) => {
   try {
