@@ -12,7 +12,7 @@ import userRoutes from "./routes/userRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import reportRoutes from "./routes/reportRoutes.js";
 import genderRoutes from "./routes/genderRoutes.js";
-// import apms from "./config/apm.js"
+import apms from "./config/apm.js"
 
 dotenv.config();
 const app = express();
