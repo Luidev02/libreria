@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -9,15 +9,17 @@ import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 const URL_API = process.env.NEXT_PUBLIC_API_URL;
 
-export default function LoginPage() {
+ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
 
+
+
   useEffect(() => {
-    const token = searchParams.get("token");
-    const userInfoEncoded = searchParams.get("info");
+    const token = searchParams.get("token") || null;
+    const userInfoEncoded = searchParams.get("info") || null;
 
     if (token && userInfoEncoded) {
       localStorage.setItem("Authorization", token);
@@ -173,5 +175,14 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+
+export default function SuspendedLoginPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <LoginPage />
+    </Suspense>
   );
 }
