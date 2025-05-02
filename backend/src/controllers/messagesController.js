@@ -1,8 +1,9 @@
-
 import Message from "../models/Message.js";
 import User from "../models/User.js";
+import apmAgent from "../config/apm.js";
 
 export const sendMessage = async (req, res) => {
+  const transaction = apmAgent.startTransaction("sendMessage", "controller");
   try {
     const { receiver_id, message } = req.body;
     const sender_id = req.user.id;
@@ -24,18 +25,19 @@ export const sendMessage = async (req, res) => {
       message,
     });
 
-
-    
     res
       .status(201)
       .json({ message: "mensaje enviado correctamente", data: newMessage });
   } catch (error) {
-    console.log(error);
+    apmAgent.captureError(error);
     res.status(500).json({ error: "error al enviar mensaje" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const getUserMessages = async (req, res) => {
+  const transaction = apmAgent.startTransaction("getUserMessages", "controller");
   try {
     const user_id = req.user.id;
     const message = await Message.findAll({
@@ -49,11 +51,15 @@ export const getUserMessages = async (req, res) => {
       .status(200)
       .json({ message: "mensajes obtenidos correctamente", data: message });
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "error al obtener los mensajes" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const getMessageById = async (req, res) => {
+  const transaction = apmAgent.startTransaction("getMessageById", "controller");
   try {
     const { id } = req.params;
     const user_id = req.user.id;
@@ -69,11 +75,15 @@ export const getMessageById = async (req, res) => {
     }
     res.status(200).json({ data: message });
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "error al obtener el mensaje" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const markAsRead = async (req, res) => {
+  const transaction = apmAgent.startTransaction("markAsRead", "controller");
   try {
     const { id } = req.params;
     const user_id = req.user.id;
@@ -86,7 +96,9 @@ export const markAsRead = async (req, res) => {
     await message.update({ read: true });
     res.status(200).json({ message: "El mensaje ha sido marcado como leído" });
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "error al marcar el mensaje como leído" });
+  } finally {
+    transaction.end();
   }
 };
- 

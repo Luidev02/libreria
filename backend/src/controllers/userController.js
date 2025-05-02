@@ -3,8 +3,10 @@ import jwt from "jsonwebtoken";
 import { sendEmail } from "../services/emailService.js";
 import User from "../models/User.js";
 import logger from "../utils/logger.js";
+import apmAgent from "../config/apm.js";
 
 export const register = async (req, res) => {
+  const transaction = apmAgent.startTransaction("register", "controller");
   try {
     const { name, email, password, role } = req.body;
     if (!name || !email || !password) {
@@ -39,12 +41,15 @@ export const register = async (req, res) => {
 
     res.json({ message: "Usuario registrado correctamente" });
   } catch (error) {
-    console.error(error);
+    apmAgent.captureError(error);
     res.status(500).json({ message: "Hubo un error en el registro" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const verifyAccount = async (req, res) => {
+  const transaction = apmAgent.startTransaction("verifyAccount", "controller");
   try {
     const { id } = req.params;
     if (!id) {
@@ -71,13 +76,17 @@ export const verifyAccount = async (req, res) => {
 
     res.json({ message: "Cuenta verificada correctamente" });
   } catch (error) {
+    apmAgent.captureError(error);
     res
       .status(500)
       .json({ message: "Hubo un error en la verificación de la cuenta" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const login = async (req, res) => {
+  const transaction = apmAgent.startTransaction("login", "controller");
   try {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -112,12 +121,15 @@ export const login = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error(error);
+    apmAgent.captureError(error);
     res.status(500).json({ message: "Hubo un error en el login" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const updateUser = async (req, res) => {
+  const transaction = apmAgent.startTransaction("updateUser", "controller");
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
@@ -142,13 +154,17 @@ export const updateUser = async (req, res) => {
 
     await user.update({ name, email });
   } catch (error) {
+    apmAgent.captureError(error);
     res
       .status(500)
       .json({ message: "Hubo un error en la actualización del usuario" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const deleteUser = async (req, res) => {
+  const transaction = apmAgent.startTransaction("deleteUser", "controller");
   try {
     const { id } = req.params;
     const user = await User.findByPk(id);
@@ -169,27 +185,38 @@ export const deleteUser = async (req, res) => {
     );
     res.json({ message: "Usuario eliminado correctamente" });
   } catch (error) {
+    apmAgent.captureError(error);
     res
       .status(500)
       .json({ message: "Hubo un error en la eliminación del usuario" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const googleAuth = async (req, res) => {
-  const token = jwt.sign(
-    { id: req.user.id, role: req.user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: "1d" }
-  );
+  const transaction = apmAgent.startTransaction("googleAuth", "controller");
+  try {
+    const token = jwt.sign(
+      { id: req.user.id, role: req.user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
-  const user = {
-    id: req.user.id, 
-    name: req.user.name,
-    email: req.user.email,
-    role: req.user.role,
-  };
+    const user = {
+      id: req.user.id, 
+      name: req.user.name,
+      email: req.user.email,
+      role: req.user.role,
+    };
 
-  const encodedUser = encodeURIComponent(JSON.stringify(user));
+    const encodedUser = encodeURIComponent(JSON.stringify(user));
 
-  res.redirect(`${process.env.URL_FRONTEND}/login?token=${token}&info=${encodedUser}`);
+    res.redirect(`${process.env.URL_FRONTEND}/login?token=${token}&info=${encodedUser}`);
+  } catch (error) {
+    apmAgent.captureError(error);
+    res.status(500).json({ message: "Hubo un error en la autenticación con Google" });
+  } finally {
+    transaction.end();
+  }
 };

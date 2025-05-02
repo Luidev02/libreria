@@ -23,7 +23,7 @@ const __dirname = path.dirname(__filename);
 
 // Middlewares
 app.use(cors({
-  origin: 'http://sc44wsk088skgco848ws84cw.34.132.235.180.sslip.io/',
+  origin: 'http://localhost:3001',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, 

@@ -1,11 +1,17 @@
 
 
+import apm from "elastic-apm-node";
+import apmAgent from "../config/apm.js";
 import Gender from "../models/Gender.js";
 
 export const getGenderService = async () => {
     try {
+        apmAgent.startTransaction("getGenderService", "service")
         const genders = await Gender.findAll();
+    
+        apmAgent.endTransaction("getGenderService", "service")
         return genders;
+
     } catch (error) {
         throw new Error("Error al obtener el género")
     }

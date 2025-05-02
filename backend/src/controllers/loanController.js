@@ -1,7 +1,9 @@
 import { Book, Loan } from "../models/index.js";
 import User from "../models/User.js";
+import apmAgent from "../config/apm.js";
 
 export const getAllLoans = async (req, res) => {
+  const transaction = apmAgent.startTransaction("getAllLoans", "controller");
   try {
     const loan = await Loan.findAll({
       include: [
@@ -14,15 +16,18 @@ export const getAllLoans = async (req, res) => {
     });
     res.json(loan);
   } catch (error) {
-    console.log(error);
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al obtener los prestamos" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const getAllLoansPerUser = async (req, res) => {
+  const transaction = apmAgent.startTransaction("getAllLoansPerUser", "controller");
   try {
     const loan = await Loan.findAll({
-      where: { userId: req.user.id},
+      where: { userId: req.user.id },
       include: [
         {
           model: Book,
@@ -33,13 +38,15 @@ export const getAllLoansPerUser = async (req, res) => {
     });
     res.json(loan);
   } catch (error) {
-    console.log(error);
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al obtener los prestamos" });
+  } finally {
+    transaction.end();
   }
 };
 
-
 export const getLoanById = async (req, res) => {
+  const transaction = apmAgent.startTransaction("getLoanById", "controller");
   try {
     const loan = await Loan.findByPk(req.params.id);
     if (!loan) {
@@ -49,11 +56,15 @@ export const getLoanById = async (req, res) => {
 
     res.json({ loan, ...user.dataValues });
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al obtener el prestamo" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const createLoan = async (req, res) => {
+  const transaction = apmAgent.startTransaction("createLoan", "controller");
   try {
     const { userId, bookId } = req.body;
     if (!userId || !bookId) {
@@ -75,11 +86,15 @@ export const createLoan = async (req, res) => {
 
     res.json(loan);
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al crear el prestamo" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const createLoanPerUser = async (req, res) => {
+  const transaction = apmAgent.startTransaction("createLoanPerUser", "controller");
   try {
     const { id } = req.user;
     const { bookId } = req.body;
@@ -106,12 +121,15 @@ export const createLoanPerUser = async (req, res) => {
 
     res.json(loan);
   } catch (error) {
-    console.log(error);
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al crear el prestamo" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const updateLoan = async (req, res) => {
+  const transaction = apmAgent.startTransaction("updateLoan", "controller");
   try {
     const loan = await Loan.findByPk(req.params.id);
     if (!loan) {
@@ -125,11 +143,15 @@ export const updateLoan = async (req, res) => {
 
     res.json({ message: "Préstamo actualizado correctamente", loan });
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al actualizar el prestamo" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const deleteLoan = async (req, res) => {
+  const transaction = apmAgent.startTransaction("deleteLoan", "controller");
   try {
     const loan = await Loan.findByPk(req.params.id);
     if (!loan) {
@@ -138,6 +160,9 @@ export const deleteLoan = async (req, res) => {
     await loan.destroy();
     res.json({ message: "Préstamo eliminado correctamente", loan });
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al eliminar el prestamo" });
+  } finally {
+    transaction.end();
   }
 };

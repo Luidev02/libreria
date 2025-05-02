@@ -1,8 +1,10 @@
 import { Op, Sequelize } from "sequelize";
 import { Book, Loan } from "../models/index.js";
 import User from "../models/User.js";
+import apmAgent from "../config/apm.js";
 
 export const getloanReports = async (req, res) => {
+  const transaction = apmAgent.startTransaction("getloanReports", "controller");
   try {
     const { startDate, endDate } = req.query;
     if (!startDate || !endDate) {
@@ -15,7 +17,6 @@ export const getloanReports = async (req, res) => {
         },
       },
       include: [{ model: User, as: "user", attributes: ["name"] }]
-
     });
     res
       .status(200)
@@ -24,12 +25,15 @@ export const getloanReports = async (req, res) => {
         data: loans,
       });
   } catch (error) {
-    console.log(error);
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al obtener informes de préstamos" });
+  } finally {
+    transaction.end();
   }
 };
 
 export const getUsersReports = async (req, res) => {
+  const transaction = apmAgent.startTransaction("getUsersReports", "controller");
   try {
     const { startDate, endDate } = req.query;
     if (!startDate || !endDate) {
@@ -50,6 +54,9 @@ export const getUsersReports = async (req, res) => {
         data: users,
       });
   } catch (error) {
+    apmAgent.captureError(error);
     res.status(500).json({ error: "Error al obtener informes de usuarios" });
+  } finally {
+    transaction.end();
   }
 };
